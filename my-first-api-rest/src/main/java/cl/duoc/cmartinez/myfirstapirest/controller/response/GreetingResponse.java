@@ -10,5 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GreetingResponse {
-    private String greeting;
+    private int id;
+    private String message;
 }
