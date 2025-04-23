@@ -1,9 +1,6 @@
 package cl.duoc.cmartinez.bookstore.domain;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -13,6 +10,7 @@ import java.util.List;
 @Setter
 @Builder
 @RequiredArgsConstructor
+@AllArgsConstructor
 public class Book {
   private final String title;
   private final String author;
