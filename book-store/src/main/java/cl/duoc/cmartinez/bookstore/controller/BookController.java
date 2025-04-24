@@ -1,5 +1,6 @@
 package cl.duoc.cmartinez.bookstore.controller;
 
+import cl.duoc.cmartinez.bookstore.controller.response.MessageResponse;
 import cl.duoc.cmartinez.bookstore.domain.Book;
 import cl.duoc.cmartinez.bookstore.repository.BookRepository;
 import org.springframework.http.HttpStatus;
@@ -34,8 +35,16 @@ public class BookController {
   }
 
   @PostMapping
-  public ResponseEntity<Void> createBook(@RequestBody Book book) {
-    books.add(book);
+  public ResponseEntity<MessageResponse> createBook(@RequestBody Book request) {
+    String isbn = request.getIsbn();
+    for (Book book : books) {
+      if (book.getIsbn().equals(isbn)) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(new MessageResponse("Error: Book already exists"));
+      }
+    }
+    books.add(request);
     return ResponseEntity.status(HttpStatus.CREATED).build();
   }
 }

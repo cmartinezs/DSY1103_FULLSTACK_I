@@ -9,20 +9,20 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@RequiredArgsConstructor
+@NoArgsConstructor
 @AllArgsConstructor
 public class Book {
-  private final String title;
-  private final String author;
-  private final String isbn;
+  private String title;
+  private String author;
+  private String isbn;
   private String publisher;
   private LocalDate publicationDate;
   private String edition;
   private String language;
-  private final int numberOfPages;
+  private int numberOfPages;
   private List<String> genres;
-  private final int totalCopies;
-  private final int availableCopies;
+  private int totalCopies;
+  private int availableCopies;
   private String shelfLocation;
   private String summary;
 }
