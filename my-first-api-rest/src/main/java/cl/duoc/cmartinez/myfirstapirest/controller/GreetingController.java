@@ -1,5 +1,6 @@
 package cl.duoc.cmartinez.myfirstapirest.controller;
 
+import cl.duoc.cmartinez.myfirstapirest.controller.request.GreetingRequest;
 import cl.duoc.cmartinez.myfirstapirest.controller.response.GreetingResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +40,23 @@ public class GreetingController {
                 elementNumber < greetingResponses.size()) {
             return ResponseEntity.ok(
                     greetingResponses.get(elementNumber));
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @PutMapping("/{elementNumber}")
+    public ResponseEntity<GreetingResponse> putGreeting(
+            @PathVariable int elementNumber,
+            @RequestBody GreetingRequest request) {
+
+        if(elementNumber >= 0 &&
+                elementNumber < greetingResponses.size()) {
+
+            GreetingResponse element = greetingResponses.get(elementNumber);
+            element.setMessage(request.getMessage());
+
+            return ResponseEntity.ok(element);
         }
 
         return ResponseEntity.notFound().build();
