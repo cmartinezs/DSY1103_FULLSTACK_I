@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/books")
@@ -92,8 +91,25 @@ public class BookController {
 
     books.set(index, request);
 
-    return ResponseEntity
-            .status(HttpStatus.OK)
-            .body(new MessageResponse("Book was replaced"));
+    return ResponseEntity.ok(new MessageResponse("Book was replaced"));
+  }
+
+  @DeleteMapping("/{isbn}")
+  public ResponseEntity<MessageResponse> deleteBook(
+          @PathVariable String isbn) {
+    Book found = null;
+    for (Book book : books) {
+      if (book.getIsbn().equals(isbn)) {
+        found = book;
+        break;
+      }
+    }
+
+    if (found == null) {
+      return ResponseEntity.notFound().build();
+    }
+
+    books.remove(found);
+    return ResponseEntity.ok(new MessageResponse("Book was deleted"));
   }
 }
