@@ -1,6 +1,6 @@
 package cl.duoc.cmartinez.bookstore.repository;
 
-import cl.duoc.cmartinez.bookstore.domain.Book;
+import cl.duoc.cmartinez.bookstore.service.domain.Book;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -196,6 +196,28 @@ public class BookRepository {
   }
 
   public static List<Book> findAll() {
-      return books;
+    return books;
+  }
+
+  public static Book findByIsbn(String isbn) {
+    for (Book book : books) {
+      if (book.getIsbn().equals(isbn)) {
+        return book;
+      }
+    }
+    return null;
+  }
+
+  public static void addBook(Book book) {
+    books.add(book);
+  }
+
+  public static void replaceBook(Book toReplace, Book request) {
+    int index = books.indexOf(toReplace);
+    books.set(index, request);
+  }
+
+  public static void removeBook(Book found) {
+    books.remove(found);
   }
 }

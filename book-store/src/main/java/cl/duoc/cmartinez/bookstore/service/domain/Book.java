@@ -1,4 +1,4 @@
-package cl.duoc.cmartinez.bookstore.domain;
+package cl.duoc.cmartinez.bookstore.service.domain;
 
 import lombok.*;
 
