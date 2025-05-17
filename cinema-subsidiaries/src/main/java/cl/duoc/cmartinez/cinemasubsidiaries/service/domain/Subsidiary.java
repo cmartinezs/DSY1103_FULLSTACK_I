@@ -1,4 +1,4 @@
-package cl.duoc.cmartinez.cinemasubsidiaries.domain;
+package cl.duoc.cmartinez.cinemasubsidiaries.service.domain;
 
 public class Subsidiary {
     private int id;
@@ -39,5 +39,9 @@ public class Subsidiary {
 
     public boolean isActive() {
         return active;
+    }
+
+    public void setId(int id){
+        this.id = id;
     }
 }

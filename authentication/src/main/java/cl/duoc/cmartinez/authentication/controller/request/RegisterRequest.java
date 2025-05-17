@@ -11,7 +11,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
-    @NotEmpty(message = "Username is required")
+    @NotBlank(message = "Username is required")
     @Size(message = "Username must be greater than 3 characters", min = 3, max = 15)
     private String username;
     @NotEmpty(message = "Password is required")

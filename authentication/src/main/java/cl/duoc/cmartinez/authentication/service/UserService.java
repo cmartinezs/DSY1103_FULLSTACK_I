@@ -19,4 +19,20 @@ public class UserService {
     }
     return repository.save(username, password, email);
   }
+
+  public boolean validateLogin(
+          String username,
+          String password) {
+    UserRepo found = repository.getByUsernameOrEmail(username, null);
+    if (found == null) {
+      return false;
+    }
+
+    if(found.getPassword().equals(password)){
+      return true;
+    }
+
+    return false;
+
+  }
 }

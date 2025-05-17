@@ -1,6 +1,8 @@
 package cl.duoc.cmartinez.authentication.controller;
 
+import cl.duoc.cmartinez.authentication.controller.request.LoginRequest;
 import cl.duoc.cmartinez.authentication.controller.request.RegisterRequest;
+import cl.duoc.cmartinez.authentication.controller.response.LoginResponse;
 import cl.duoc.cmartinez.authentication.controller.response.RegisterResponse;
 import cl.duoc.cmartinez.authentication.service.UserService;
 import jakarta.validation.Valid;
@@ -32,5 +34,21 @@ public class UserController {
     return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(re);
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<LoginResponse> login(
+          @Valid @RequestBody LoginRequest request) {
+    boolean validated = userService.validateLogin(
+            request.getUsername(),
+            request.getPassword()
+    );
+
+    if(validated) {
+      return ResponseEntity.ok(new LoginResponse("Login successful"));
+    } else {
+      return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+              .body(new LoginResponse("Invalid username or password"));
+    }
   }
 }
