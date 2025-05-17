@@ -1,13 +1,13 @@
 package cl.duoc.cmartinez.cinemasubsidiaries.controller;
 
+import cl.duoc.cmartinez.cinemasubsidiaries.controller.request.AddSubsidiaryRequest;
 import cl.duoc.cmartinez.cinemasubsidiaries.service.domain.Subsidiary;
-import cl.duoc.cmartinez.cinemasubsidiaries.service.domain.SubsidiaryService;
+import cl.duoc.cmartinez.cinemasubsidiaries.service.SubsidiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -31,7 +31,14 @@ public class SubsidiaryController {
   }
 
   @PostMapping
-  public ResponseEntity<Void> addSubsidiary(@RequestBody Subsidiary subsidiary) {
+  public ResponseEntity<Void> addSubsidiary(@RequestBody AddSubsidiaryRequest request) {
+    Subsidiary subsidiary = new Subsidiary(0,
+            request.getName(),
+            request.getAddress(),
+            request.getPhone(),
+            request.getCapacity(),
+            true);
+
     boolean saved = service.save(subsidiary);
     if (saved) {
       return ResponseEntity.status(HttpStatus.CREATED).build();
