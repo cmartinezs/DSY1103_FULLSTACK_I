@@ -3,6 +3,7 @@ package cl.duoc.cmartinez.cinemasubsidiaries.controller;
 import cl.duoc.cmartinez.cinemasubsidiaries.controller.request.AddSubsidiaryRequest;
 import cl.duoc.cmartinez.cinemasubsidiaries.service.domain.Subsidiary;
 import cl.duoc.cmartinez.cinemasubsidiaries.service.SubsidiaryService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,7 +32,8 @@ public class SubsidiaryController {
   }
 
   @PostMapping
-  public ResponseEntity<Void> addSubsidiary(@RequestBody AddSubsidiaryRequest request) {
+  public ResponseEntity<Void> addSubsidiary(
+          @Valid @RequestBody AddSubsidiaryRequest request) {
     Subsidiary subsidiary = new Subsidiary(0,
             request.getName(),
             request.getAddress(),
