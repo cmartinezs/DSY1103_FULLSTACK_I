@@ -2,18 +2,17 @@ package cl.duoc.cmartinez.authentication.controller;
 
 import cl.duoc.cmartinez.authentication.controller.request.LoginRequest;
 import cl.duoc.cmartinez.authentication.controller.request.RegisterRequest;
+import cl.duoc.cmartinez.authentication.controller.request.ValidateUserRequest;
 import cl.duoc.cmartinez.authentication.controller.response.LoginResponse;
 import cl.duoc.cmartinez.authentication.controller.response.RegisterResponse;
+import cl.duoc.cmartinez.authentication.service.RegisterUserResult;
 import cl.duoc.cmartinez.authentication.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -22,33 +21,42 @@ public class UserController {
 
   @PostMapping("/register")
   public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
-    int id = userService.registerUser(
-            request.getUsername(),
-            request.getPassword(),
-            request.getEmail());
+    RegisterUserResult result =
+        userService.registerUser(request.getUsername(), request.getPassword(), request.getEmail());
 
-    if (id < 0) {
-      return ResponseEntity.badRequest().body(new RegisterResponse("Username or email already exists", -1));
+    if (result.getId() < 0) {
+      return ResponseEntity.badRequest()
+          .body(new RegisterResponse("Username or email already exists", -1, null));
     }
-    RegisterResponse re = new RegisterResponse("User registered successfully", id);
-    return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(re);
+    RegisterResponse re =
+        new RegisterResponse(
+            "User registered successfully", result.getId(), result.getValidationCode());
+    return ResponseEntity.status(HttpStatus.CREATED).body(re);
   }
 
   @PostMapping("/login")
-  public ResponseEntity<LoginResponse> login(
-          @Valid @RequestBody LoginRequest request) {
-    boolean validated = userService.validateLogin(
-            request.getUsername(),
-            request.getPassword()
-    );
+  public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+    boolean validated = userService.validateLogin(request.getUsername(), request.getPassword());
 
-    if(validated) {
+    if (validated) {
       return ResponseEntity.ok(new LoginResponse("Login successful"));
     } else {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-              .body(new LoginResponse("Invalid username or password"));
+          .body(new LoginResponse("Invalid username or password"));
+    }
+  }
+
+  @PatchMapping("/validate/{username}")
+  public ResponseEntity<LoginResponse> validate(
+          @PathVariable String username,
+          @Valid @RequestBody ValidateUserRequest request){
+    boolean validated = userService.validateUser(username, request.getValidationCode());
+
+    if (validated) {
+      return ResponseEntity.ok(new LoginResponse("User validated successful"));
+    } else {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+              .body(new LoginResponse("Error at validated user"));
     }
   }
 }

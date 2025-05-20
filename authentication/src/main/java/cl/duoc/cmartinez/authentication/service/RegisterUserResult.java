@@ -1,4 +1,4 @@
-package cl.duoc.cmartinez.authentication.controller.response;
+package cl.duoc.cmartinez.authentication.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,10 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class RegisterResponse {
-    private String message;
+@AllArgsConstructor
+public class RegisterUserResult {
     private int id;
     private String validationCode;
 }

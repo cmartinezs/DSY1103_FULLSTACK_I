@@ -13,9 +13,9 @@ public class UserRepository {
     users.add(user);
   }
 
-  public int save(String username, String password, String email) {
+  public int save(String username, String password, String email, String validationCode) {
     int id = users.size() + 1;
-    users.add(new UserRepo(id, username, password, email));
+    users.add(new UserRepo(id, username, password, email, validationCode, false));
     return id;
   }
 

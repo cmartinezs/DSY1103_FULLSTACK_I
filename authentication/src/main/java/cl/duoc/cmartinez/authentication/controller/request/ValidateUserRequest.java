@@ -1,5 +1,6 @@
-package cl.duoc.cmartinez.authentication.repository;
+package cl.duoc.cmartinez.authentication.controller.request;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,11 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRepo {
-  private int id;
-  private String username;
-  private String password;
-  private String email;
+public class ValidateUserRequest {
+  @NotBlank(message = "Validation code is required")
   private String validationCode;
-  private boolean validated;
 }
