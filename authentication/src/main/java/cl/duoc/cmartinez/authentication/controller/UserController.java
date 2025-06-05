@@ -1,18 +1,21 @@
 package cl.duoc.cmartinez.authentication.controller;
 
+import cl.duoc.cmartinez.authentication.controller.request.EnrollUserRequest;
 import cl.duoc.cmartinez.authentication.controller.request.LoginRequest;
 import cl.duoc.cmartinez.authentication.controller.request.RegisterRequest;
 import cl.duoc.cmartinez.authentication.controller.request.ValidateUserRequest;
 import cl.duoc.cmartinez.authentication.controller.response.LoginResponse;
 import cl.duoc.cmartinez.authentication.controller.response.RegisterResponse;
+import cl.duoc.cmartinez.authentication.service.GetUserResult;
 import cl.duoc.cmartinez.authentication.service.RegisterUserResult;
 import cl.duoc.cmartinez.authentication.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/users")
@@ -48,15 +51,37 @@ public class UserController {
 
   @PatchMapping("/validate/{username}")
   public ResponseEntity<LoginResponse> validate(
-          @PathVariable String username,
-          @Valid @RequestBody ValidateUserRequest request){
+      @PathVariable String username, @Valid @RequestBody ValidateUserRequest request) {
     boolean validated = userService.validateUser(username, request.getValidationCode());
 
     if (validated) {
       return ResponseEntity.ok(new LoginResponse("User validated successful"));
     } else {
       return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-              .body(new LoginResponse("Error at validated user"));
+          .body(new LoginResponse("Error at validated user"));
+    }
+  }
+
+  @PatchMapping("/enrolling/{username}")
+  public ResponseEntity<LoginResponse> enrolling(
+      @PathVariable String username, @Valid @RequestBody EnrollUserRequest request) {
+    boolean enrolled = userService.enrollUser(username, request.getRoleId());
+
+    if (enrolled) {
+      return ResponseEntity.ok(new LoginResponse("User enrolled successfully"));
+    } else {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+          .body(new LoginResponse("Error at enrolling user"));
+    }
+  }
+
+  @GetMapping("/by-username/{username}")
+  public ResponseEntity<GetUserResult> getUserByUsername(@PathVariable String username) {
+    Optional<GetUserResult> user = userService.getUserByUsername(username);
+    if (user.isPresent()) {
+      return ResponseEntity.ok(user.get());
+    } else {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
   }
 }
