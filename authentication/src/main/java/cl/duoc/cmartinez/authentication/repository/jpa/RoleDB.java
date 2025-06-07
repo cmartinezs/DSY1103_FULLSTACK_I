@@ -1,6 +1,7 @@
 package cl.duoc.cmartinez.authentication.repository.jpa;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
