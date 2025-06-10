@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: store
+  datasource:
+    url: jdbc:h2:file:./db/store
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  h2:
+    console:
+      enabled: true
+      settings:
+        web-allow-others: true
+  jpa:
+    properties:
+      hibernate:
+        enable_lazy_load_no_trans: true
+        use_sql_comments: false
+        format_sql: false
+        hbm2ddl:
+          auto: update
+        dialect: org.hibernate.dialect.H2Dialect
+        show_sql: true
