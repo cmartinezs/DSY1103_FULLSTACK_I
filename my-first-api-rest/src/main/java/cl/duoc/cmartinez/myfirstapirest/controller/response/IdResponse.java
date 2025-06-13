@@ -10,5 +10,5 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class IdResponse {
-    private int id;
+    private Long id;
 }

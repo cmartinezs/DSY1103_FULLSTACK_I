@@ -1,4 +1,4 @@
-package cl.duoc.cmartinez.myfirstapirest.repository.jpa;
+package cl.duoc.cmartinez.myfirstapirest.repository.jpa.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
