@@ -1,0 +1,6 @@
+spring:
+  application:
+    name: module-two
+
+server:
+  port: 8091
