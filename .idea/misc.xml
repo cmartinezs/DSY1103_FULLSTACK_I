@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/authentication/pom.xml" />
         <option value="$PROJECT_DIR$/my-first-api-rest/pom.xml" />
         <option value="$PROJECT_DIR$/cinema-subsidiaries/pom.xml" />
+        <option value="$PROJECT_DIR$/sb-multi-module/pom.xml" />
       </list>
     </option>
   </component>

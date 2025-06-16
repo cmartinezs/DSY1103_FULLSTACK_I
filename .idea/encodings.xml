@@ -5,5 +5,9 @@
     <file url="file://$PROJECT_DIR$/book-store/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/cinema-subsidiaries/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/my-first-api-rest/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sb-multi-module/module-one/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sb-multi-module/module-two/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sb-multi-module/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/sb-multi-module/src/main/resources" charset="UTF-8" />
   </component>
 </project>
