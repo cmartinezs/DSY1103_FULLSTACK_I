@@ -9,6 +9,11 @@ import cl.duoc.cmartinez.authentication.controller.response.RegisterResponse;
 import cl.duoc.cmartinez.authentication.service.GetUserResult;
 import cl.duoc.cmartinez.authentication.service.RegisterUserResult;
 import cl.duoc.cmartinez.authentication.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +27,15 @@ import java.util.Optional;
 public class UserController {
   @Autowired private UserService userService;
 
+  @Operation(summary = "Permite el registro de un nuevo usuario")
+  @ApiResponses(value = {
+    @ApiResponse(responseCode = "201", description = "Registra exitosamente un nuevo usuario",
+        content = {@Content(mediaType = "application/json",
+        schema = @Schema(implementation = RegisterResponse.class)) }),
+    @ApiResponse(responseCode = "400", description = "El usuario o email ya existe",
+        content = {@Content(mediaType = "application/json",
+        schema = @Schema(implementation = RegisterResponse.class)) })
+  })
   @PostMapping("/register")
   public ResponseEntity<RegisterResponse> register(@Valid @RequestBody RegisterRequest request) {
     RegisterUserResult result =
